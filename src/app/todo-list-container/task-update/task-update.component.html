@@ -1,0 +1,36 @@
+<div class="needs-validation" [formGroup]="updateTaskForm" style="padding: 15px">
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <label for="title" class="mb-1">Title<span class="text-danger">(*)</span></label>
+      <input type="text" class="form-control" id="title" placeholder="Title" formControlName="title" required>
+      <div *ngIf="formControl['title'].errors && (formControl['title'].touched || formControl['title'].dirty)">
+        <small *ngIf="formControl['title'].errors?.['required']" class="text-danger">The title must not be blank</small>
+      </div>
+    </div>
+    <div class="col-md-12 mb-4">
+      <label for="description" class="mb-1">Description</label>
+      <textarea type="text" class="form-control" rows="5" id="description" placeholder="Description"
+                formControlName="description"></textarea>
+    </div>
+    <div class="col-md-6 mb-4">
+      <label for="dueDate" class="mb-1">Due Date</label>
+      <input type="date" class="form-control" id="dueDate" placeholder="Due Date" formControlName="dueDate">
+      <div *ngIf="formControl['dueDate'].errors && (formControl['dueDate'].touched || formControl['dueDate'].dirty)">
+        <small *ngIf="formControl['dueDate'].errors?.['beforeNow']" class="text-danger">Due date cannot be selected in the past</small>
+      </div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <label for="priority" class="mb-1">Priority</label>
+      <select class="form-control" formControlName="priority" id="priority">
+        <option value="low">Low</option>
+        <option value="normal">Normal</option>
+        <option value="high">High</option>
+      </select>
+
+    </div>
+    <div class="col-md-12">
+      <button type="button" class="btn btn-success w-100" (click)="save()">Add</button>
+    </div>
+  </div>
+</div>
+
