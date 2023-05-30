@@ -1,0 +1,14 @@
+
+<div class="d-flex justify-content-between align-items-center card-item">
+  <div class="d-flex justify-content-between align-items-center ">
+    <input type="checkbox" (change)="onChangeSelection($event)">
+    <div style="margin-left: 15px">{{todoInput.title}}</div>
+  </div>
+  <div>
+    <button class="btn btn-info" style="color: #FFF" (click)="detail = !detail">Detail</button>
+    <button class="btn btn-danger ml15px" (click)="removeTask()">Remove</button>
+  </div>
+</div>
+<div *ngIf="detail" class="container-update">
+  <app-task-update [detailTask]="todoInput" [actionType]="'update'"></app-task-update>
+</div>

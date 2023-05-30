@@ -7,7 +7,7 @@
         <small *ngIf="formControl['title'].errors?.['required']" class="text-danger">The title must not be blank</small>
       </div>
     </div>
-    <div class="col-md-12 mb-4">
+    <div  class="col-md-12 mb-4">
       <label for="description" class="mb-1">Description</label>
       <textarea type="text" class="form-control" rows="5" id="description" placeholder="Description"
                 formControlName="description"></textarea>
@@ -29,7 +29,7 @@
 
     </div>
     <div class="col-md-12">
-      <button type="button" class="btn btn-success w-100" (click)="save()">Add</button>
+      <button type="button" class="btn btn-success w-100" (click)="save()">{{actionType == 'update' ? 'Update' : 'Add'}}</button>
     </div>
   </div>
 </div>

@@ -1,1 +1,22 @@
-<div >tasks-mangement works!</div>
+<div class="list-item-container">
+  <div class="needs-validation" [formGroup]="searchForm" style="padding: 15px">
+    <div class="row" style="margin-top: 30px">
+      <div class="col-md-12 mb-4">
+        <input type="text" class="form-control" placeholder="Search..." formControlName="search">
+      </div>
+    </div>
+  </div>
+  <div *ngIf="taskRecords && taskRecords.length" style="padding: 15px; overflow-y: overlay; margin-bottom: 60px">
+    <div *ngFor="let task of taskRecords">
+      <app-task-item [todoInput]="task"></app-task-item>
+    </div>
+  </div>
+  <div *ngIf="hasSelected" class="list-item-footer-action">
+    <div>Bulk Action</div>
+    <div>
+      <button type="button" class="btn btn-primary">Done</button>
+      <button type="button" class="btn btn-danger" (click)="removeMulti()">Remove</button>
+    </div>
+
+  </div>
+</div>

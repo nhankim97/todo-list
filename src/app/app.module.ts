@@ -7,13 +7,15 @@ import {TodoListContainerComponent} from './todo-list-container/todo-list-contai
 import {TaskUpdateComponent} from './todo-list-container/task-update/task-update.component';
 import {TasksManagementComponent} from './todo-list-container/tasks-mangement/tasks-management.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { TaskItemComponent } from './todo-list-container/task-item/task-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoListContainerComponent,
     TaskUpdateComponent,
-    TasksManagementComponent
+    TasksManagementComponent,
+    TaskItemComponent
   ],
   imports: [
     BrowserModule,

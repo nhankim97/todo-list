@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import * as moment from "moment";
+import {TodoTaskService} from "../todo-task.service";
+import {TaskModel} from "../interface/task.model";
 
 @Component({
   selector: 'app-task-update',
@@ -8,6 +10,8 @@ import * as moment from "moment";
   styleUrls: ['./task-update.component.less']
 })
 export class TaskUpdateComponent implements OnInit {
+  @Input() detailTask?: TaskModel;
+  @Input() actionType?: string
   updateTaskForm: FormGroup = this.fb.group({
     title: [null, Validators.required],
     dueDate: [moment().format('YYYY-MM-DD'), this.validateDueDate.bind(this)],
@@ -15,10 +19,15 @@ export class TaskUpdateComponent implements OnInit {
     priority: ['normal']
   });
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private todoTaskService: TodoTaskService,
+  ) {
   }
 
   ngOnInit(): void {
+    if (this.actionType == 'update' && this.detailTask) {
+      this.updateTaskForm.patchValue(this.detailTask);
+    }
   }
 
   markAsTouched(formGroup: any) {
@@ -45,9 +54,19 @@ export class TaskUpdateComponent implements OnInit {
   save() {
     this.markAsTouched(this.updateTaskForm);
     if (this.updateTaskForm.invalid) {
-      return
+      return;
     }
-    console.log(this.updateTaskForm.getRawValue());
+
+    const data: TaskModel = this.actionType === 'update' && this.detailTask ? {...this.updateTaskForm.getRawValue(), id: this.detailTask.id} : this.updateTaskForm.getRawValue();
+    this.todoTaskService.saveToLocalStore(data, this.actionType || 'create');
+    if (!this.actionType || this.actionType !== 'update') {
+      this.updateTaskForm.reset();
+      this.updateTaskForm.patchValue({
+        dueDate: moment().format('YYYY-MM-DD'),
+        priority: 'normal'
+      })
+    }
+
   }
 
   validateDueDate(control: FormControl): any {
